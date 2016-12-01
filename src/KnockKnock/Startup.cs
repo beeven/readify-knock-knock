@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using KnockKnock.Services;
 
 namespace KnockKnock
 {
@@ -27,6 +28,9 @@ namespace KnockKnock
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<FibonacciService>();
+            services.AddScoped<ReverseWordsService>();
+            services.AddScoped<TriangleTypeService>();
             // Add framework services.
             services.AddMvc();
         }
