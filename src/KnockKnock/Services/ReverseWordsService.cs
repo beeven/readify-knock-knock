@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KnockKnock.Services 
 {
-    public class ReverseWordsService
+    public class ReverseWordsService:IReverseWordsService
     {
         public string ReverseWords(string sentence)
         {

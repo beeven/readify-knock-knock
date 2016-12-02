@@ -10,14 +10,14 @@ namespace KnockKnock.Controllers
     [Route("api/[action]")]
     public class KnockKnockController : Controller
     {
-        private readonly FibonacciService fSvc;
-        private readonly ReverseWordsService rwSvc;
-        private readonly TriangleTypeService ttSvc;
-        public KnockKnockController(FibonacciService fSvc,ReverseWordsService rwSvc, TriangleTypeService ttSvc)
+        private readonly IFibonacciService _fibonacciService;
+        private readonly IReverseWordsService _reverseWordsService;
+        private readonly ITriangleTypeService _triangleTypeService;
+        public KnockKnockController(IFibonacciService fibonacciService,IReverseWordsService reverseWordsService, ITriangleTypeService triangleTypeService)
         {
-            this.fSvc = fSvc;
-            this.rwSvc = rwSvc;
-            this.ttSvc = ttSvc;
+            _fibonacciService = fibonacciService;
+            _reverseWordsService = reverseWordsService;
+            _triangleTypeService = triangleTypeService;
         }
 
         [ResponseCacheAttribute(Location=ResponseCacheLocation.Any,Duration=60)]
@@ -26,7 +26,7 @@ namespace KnockKnock.Controllers
         {
             try
             {
-                return Json(fSvc.GetFibonacciAt(n));
+                return Json(_fibonacciService.GetFibonacciNumberAt(n));
             }
             catch(ArgumentOutOfRangeException)
             {
@@ -38,7 +38,7 @@ namespace KnockKnock.Controllers
         [HttpGet]
         public IActionResult Token()
         {
-            return Json("f0042d62-3ff2-44d0-81fe-5d1103647aee");
+            return Json("d644cc6a-114b-43ee-9503-13ddca467836");
         }
 
 
@@ -46,15 +46,14 @@ namespace KnockKnock.Controllers
         [HttpGet]
         public IActionResult ReverseWords([FromQuery]string sentence)
         {
-            //System.Console.WriteLine(System.Net.WebUtility.UrlDecode(sentence));
-            return Json(rwSvc.ReverseWords(sentence));
+            return Json(_reverseWordsService.ReverseWords(sentence));
         }
         
 
         [HttpGet]
         public IActionResult TriangleType(int a, int b, int c)
         {
-            return Json(ttSvc.GetTriangelTypeString(a,b,c));
+            return Json(_triangleTypeService.GetTriangleType(a,b,c).ToString());
         }
 
         

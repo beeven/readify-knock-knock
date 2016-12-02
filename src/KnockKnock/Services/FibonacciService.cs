@@ -6,30 +6,46 @@ using System.Threading.Tasks;
 
 namespace KnockKnock.Services 
 {
-    public class FibonacciService
+    /// <summary>
+    /// Pre calculate Fibonacci sequence to speed up.
+    /// </summary>
+    public class FibonacciService:IFibonacciService
     {
-        private Int64[] fibonacciNumbers = new Int64[93];
-        public FibonacciService()
+
+        private Int64 FibonacciNumber(int n)
         {
-            fibonacciNumbers[0] = 0;
-            fibonacciNumbers[1] = 1;
-            for(int i=2;i<93;i++)
+            if (n == 0)
             {
-                fibonacciNumbers[i] = fibonacciNumbers[i-1] + fibonacciNumbers[i-2];
+                return 0;
+            }
+            else if(n==1)
+            {
+                return 1;
+            }
+            else
+            {
+                Int64 a = 0, b = 1, c=1;
+                for(int i=2;i<=n;i++)
+                {
+                    c = a + b;
+                    a = b;
+                    b = c;
+                }
+                return c;
             }
         }
 
-        public Int64 GetFibonacciAt(int n)
+        public Int64 GetFibonacciNumberAt(int n)
         {
             if(n > 92 || n < -92)
             {
-                throw new ArgumentOutOfRangeException(nameof(n),n,"Number should be confined within -92,92");
+                throw new ArgumentOutOfRangeException(nameof(n),n,"Input number should be between -92 and 92");
             }
             if(n<0)
             {
-                return n%2 == 0 ? -fibonacciNumbers[-n] : fibonacciNumbers[-n];
+                return n%2 == 0 ? -FibonacciNumber(-n) : FibonacciNumber(-n);
             }
-            return fibonacciNumbers[n];
+            return FibonacciNumber(n);
         }
 
     }

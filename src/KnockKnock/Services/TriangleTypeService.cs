@@ -5,21 +5,15 @@ using System.Threading.Tasks;
 
 namespace KnockKnock.Services
 {
-    public class TriangleTypeService
+    public class TriangleTypeService:ITriangleTypeService
     {
-        public string GetTriangelTypeString(int a, int b, int c)
-        {
-            var triangleType = GetTriangleType(a, b, c);
-            return Enum.GetName(typeof(TriangleType), triangleType);
-        }
-
         public TriangleType GetTriangleType(int a, int b, int c)
         {
             if (a <= 0 || b <= 0 || c <= 0)
             {
                 return TriangleType.Error;
             }
-            if (a - c >= b || b - c >= a || c - b >= a) // using + may overflow
+            if (a - c >= b || b - c >= a || c - b >= a) // using + may cause overflow
             {
                 return TriangleType.Error;
             }
@@ -33,15 +27,14 @@ namespace KnockKnock.Services
             }
             return TriangleType.Scalene;
         }
+    }
 
-        public enum TriangleType
-        {
-            Error,
-            Equilateral,
-            Isosceles,
-            Scalene
-        }
-
+    public enum TriangleType
+    {
+        Error,
+        Equilateral,
+        Isosceles,
+        Scalene
     }
 
 }
