@@ -14,8 +14,6 @@ namespace KnockKnock.Test
         public FibonacciTests()
         {
             _fibonacciService = new FibonacciService();
-            //_fibonacciService = new FibonacciMatrix();
-            //_fibonacciService = new FibonacciPreCalculated();
         }
 
         [Fact]

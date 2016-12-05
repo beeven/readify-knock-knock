@@ -29,5 +29,12 @@ namespace KnockKnock.Test
             var actual = _reverseWordsService.ReverseWords("  abc  def ");
             actual.Should().Be("  cba  fed ");
         }
+
+        [Fact]
+        public void ShouldReverseWordsGivenSentenceWithUnicodeCharacter()
+        {
+            var actual = _reverseWordsService.ReverseWords("\u65E5\u672C\u8BED");
+            actual.Should().Be("\u8BED\u672C\u65E5");
+        }
     }
 }
